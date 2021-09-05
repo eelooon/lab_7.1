@@ -1,0 +1,74 @@
+// labNumber7_basicLvl.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cmath>
+#include <iostream>
+using namespace std;
+
+struct Queue
+{
+    string name;
+    int memory;
+    Queue* next;
+};
+
+void Out(Queue *top)
+{
+    int sum = 0;
+    cout <<endl<< "Ваша очередь";
+    do
+    {
+        cout << endl;
+        cout <<"Компьютор: " << top->name << endl;
+        cout <<"Память: " << top->memory << endl;
+        sum = sum + top->memory;
+        top = top->next;
+    } while (top);
+    cout << "Общий обьем памяти: " << sum;
+}
+
+int main()
+{
+    setlocale(0, "ru");
+    int count , countWhile = 1;
+    cout << "Введите количетво компьютеров: ";
+    cin >> count;
+    Queue* top, * p, * first , *temp;
+    top = new Queue;
+    top->next = NULL;
+    cout << "Введите название компа: ";
+    cin.ignore(std::cin.rdbuf()->in_avail());
+    getline(cin, top->name);
+    cout << "Введите колиество памяти: ";
+    cin >> top->memory;
+    first = top;
+    cout << endl;
+    while (1)
+    {
+        if (countWhile == count)
+            break;
+        p = new Queue;
+        p->next = NULL;
+        cout << "Введите название компа: ";
+        cin.ignore(std::cin.rdbuf()->in_avail());
+        getline(cin , p->name);
+        cout << "Введите колиество памяти: ";
+        cin >> p->memory;
+        top->next = p;
+        top = p;
+        countWhile++;
+    }
+    top = first;
+    Out(top);
+    
+    temp = top->next;
+    free(top);
+    top = temp;
+    cout << endl;
+
+    Out(top);
+
+}
+
