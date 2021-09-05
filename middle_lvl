@@ -1,0 +1,85 @@
+// labNumber7_middle.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cmath>
+#include <iostream>
+using namespace std;
+
+struct Queue
+{
+    string strNumber;
+    Queue* next;
+};
+
+void Out(Queue* top , int &psum)
+{
+    psum = 0;
+    do
+    {
+        cout <<" " << top->strNumber;
+        top = top->next;
+        if (top)
+        {
+            psum = psum + top->strNumber.length();
+        }
+        
+    } while (top);
+}
+
+int main()
+{
+    int count = 0 , sum = 0;
+    string array[4] = { "one" , "two" , "three" , "four" };
+    Queue* top, * p, * first , *temp ;
+    top = new Queue;
+    top->next = NULL;
+    top->strNumber = array[0];
+    first = top;
+    count++;
+    while (count != 4)
+    {
+        p = new Queue;
+        p->next = NULL;
+        p->strNumber = array[count];
+        top->next = p;
+        top = p;
+        count++;
+    }
+    top = first;
+    cout << "Your queue: ";
+    Out(top , sum);
+    count = 0;
+    while (count != 2)
+    {
+        temp = top->next;
+        free(top);
+        top = temp;
+        count++;
+    }
+    cout << endl << " Delete first element: ";
+    Out(top , sum);
+    first = top;
+    do
+    {
+        if (top->next == NULL)
+            break;
+        top = top->next;          
+    } while (1);
+    p = new Queue;
+    p->next = NULL;
+    p->strNumber = "inf";
+    top->next = p;
+    top = p;
+    top = first;
+    cout << endl << "add inf: ";
+    Out(top , sum);
+    cout << endl << "Length str: " << sum;
+
+
+
+}
+
+
